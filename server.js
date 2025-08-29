@@ -31,6 +31,24 @@ function generateUserId(fullName) {
     return `${fullName.toLowerCase().replace(/\s+/g, '_')}_${day}${month}${year}`;
 }
 
+app.get('/bfhl', (req, res) => {
+    res.status(200).json({
+        message: 'Bajaj Project API - POST /bfhl endpoint',
+        description: 'This endpoint accepts POST requests to process array data',
+        usage: {
+            method: 'POST',
+            endpoint: '/bfhl',
+            body: {
+                data: ['array', 'of', 'mixed', 'values']
+            }
+        },
+        example: {
+            input: { data: ['a', '1', '334', '4', 'R', '$'] },
+            output: 'Categorized data with user information'
+        }
+    });
+});
+
 app.post('/bfhl', (req, res) => {
     try {
         const { data } = req.body;
@@ -120,6 +138,7 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             'POST /bfhl': 'Process array and return categorized data',
+            'GET /bfhl': 'Display endpoint information',
             'GET /health': 'Health check endpoint'
         }
     });
