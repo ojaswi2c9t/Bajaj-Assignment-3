@@ -23,10 +23,11 @@ function isSpecialCharacter(str) {
 }
 
 function generateUserId(fullName) {
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
+    // Using a fixed date format as per assignment requirements
+    // Format: full_name_ddmmyyyy
+    const day = '29';
+    const month = '08';
+    const year = '2025';
     return `${fullName.toLowerCase().replace(/\s+/g, '_')}_${day}${month}${year}`;
 }
 
@@ -61,12 +62,16 @@ app.post('/bfhl', (req, res) => {
                 sum += num;
             } else if (isAlphabet(str)) {
                 alphabets.push(str.toUpperCase());
-                allAlphabets += str;
+                // For concatenation, collect all individual characters from alphabetic strings
+                for (let char of str) {
+                    allAlphabets += char;
+                }
             } else if (isSpecialCharacter(str)) {
                 specialCharacters.push(str);
             }
         });
 
+        // Concatenation logic: reverse order with alternating caps
         let concatString = '';
         const reversedAlphabets = allAlphabets.split('').reverse();
         reversedAlphabets.forEach((char, index) => {
@@ -79,8 +84,8 @@ app.post('/bfhl', (req, res) => {
 
         const response = {
             is_success: true,
-            user_id: generateUserId(process.env.USER_FULL_NAME || "Ojaswi Gahoi"),
-            email: process.env.USER_EMAIL || "ojaswigahoi@gmail.com",
+            user_id: generateUserId(process.env.USER_FULL_NAME || "Piyush Torawane"),
+            email: process.env.USER_EMAIL || "piyush.torawane@vitbhopal.ac.in",
             roll_number: process.env.USER_ROLL_NUMBER || "22BCE10783",
             odd_numbers: oddNumbers,
             even_numbers: evenNumbers,
