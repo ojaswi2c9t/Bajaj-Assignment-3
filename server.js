@@ -1,10 +1,10 @@
-require('dotenv').config({ path: './config.env' });
+// Environment variables removed - using hardcoded values
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 app.use(helmet());
 app.use(cors());
@@ -84,9 +84,9 @@ app.post('/bfhl', (req, res) => {
 
         const response = {
             is_success: true,
-            user_id: generateUserId(process.env.USER_FULL_NAME || "Piyush Torawane"),
-            email: process.env.USER_EMAIL || "piyush.torawane@vitbhopal.ac.in",
-            roll_number: process.env.USER_ROLL_NUMBER || "22BCE10783",
+            user_id: generateUserId("Piyush Torawane"),
+            email: "piyush.torawane@vitbhopal.ac.in",
+            roll_number: "22BCE10783",
             odd_numbers: oddNumbers,
             even_numbers: evenNumbers,
             alphabets: alphabets,
