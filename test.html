@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bajaj Project API Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .example-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .example-btn {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .example-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+        
+        .response-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .response-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .response-content {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .api-info {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .api-info h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .api-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .api-info li {
+            padding: 5px 0;
+            border-bottom: 1px solid #e1f5fe;
+        }
+        
+        .api-info li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Bajaj Project API</h1>
+            <p>Test your array processing API with ease</p>
+        </div>
+        
+        <div class="content">
+            <div class="api-info">
+                <h3>📋 API Information</h3>
+                <ul>
+                    <li><strong>Endpoint:</strong> POST /bfhl</li>
+                    <li><strong>Status Code:</strong> 200 (success)</li>
+                    <li><strong>Input:</strong> JSON with "data" array</li>
+                    <li><strong>Output:</strong> Categorized data with user info</li>
+                </ul>
+            </div>
+            
+            <div class="input-section">
+                <h3>📤 Input Data</h3>
+                <div class="example-buttons">
+                    <button class="example-btn" onclick="loadExample('exampleA')">Example A</button>
+                    <button class="example-btn" onclick="loadExample('exampleB')">Example B</button>
+                    <button class="example-btn" onclick="loadExample('exampleC')">Example C</button>
+                    <button class="example-btn" onclick="clearInput()">Clear</button>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="arrayInput" placeholder="Enter array elements separated by commas (e.g., a,1,334,4,R,$)" />
+                    <button onclick="processArray()">Process Array</button>
+                </div>
+            </div>
+            
+            <div class="response-section">
+                <h3>📥 Response</h3>
+                <div id="responseContent" class="response-content">
+                    Enter an array above and click "Process Array" to see the response...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const examples = {
+            exampleA: ['a', '1', '334', '4', 'R', '$'],
+            exampleB: ['2', 'a', 'y', '4', '&', '-', '*', '5', '92', 'b'],
+            exampleC: ['A', 'ABcD', 'DOE']
+        };
+        
+        function loadExample(exampleKey) {
+            const example = examples[exampleKey];
+            document.getElementById('arrayInput').value = example.join(',');
+        }
+        
+        function clearInput() {
+            document.getElementById('arrayInput').value = '';
+            document.getElementById('responseContent').innerHTML = 'Enter an array above and click "Process Array" to see the response...';
+        }
+        
+        function processArray() {
+            const input = document.getElementById('arrayInput').value.trim();
+            if (!input) {
+                showError('Please enter an array');
+                return;
+            }
+            
+            // Parse input into array
+            const array = input.split(',').map(item => item.trim()).filter(item => item);
+            
+            // Show loading
+            document.getElementById('responseContent').innerHTML = '<div class="loading">Processing array...</div>';
+            
+            // Make API call
+            fetch('http://localhost:3001/bfhl', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: array })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.is_success) {
+                    showSuccess(data);
+                } else {
+                    showError(data.error || 'Unknown error occurred');
+                }
+            })
+            .catch(error => {
+                showError('Error: ' + error.message);
+            });
+        }
+        
+        function showSuccess(data) {
+            const responseContent = document.getElementById('responseContent');
+            responseContent.innerHTML = JSON.stringify(data, null, 2);
+            responseContent.className = 'response-content success';
+        }
+        
+        function showError(message) {
+            const responseContent = document.getElementById('responseContent');
+            responseContent.innerHTML = `<div class="error">❌ ${message}</div>`;
+            responseContent.className = 'response-content';
+        }
+        
+        // Handle Enter key
+        document.getElementById('arrayInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                processArray();
+            }
+        });
+        
+        // Load example A by default
+        loadExample('exampleA');
+    </script>
+</body>
+</html>
